@@ -6,7 +6,7 @@ const Hero = () => {
     <div className="pb-20 pt-36 relative">
       <div>
         <Spotlight className="z-30 -top-40 -left-10 md:-left-32 md:-top-20 h-screen" fill="white" />
-        <Spotlight className="z-20 -top-10 -left-full h-[80vh] w-[50vw]" fill="purple" />
+        <Spotlight className="z-24 -top-10 -left-full h-[80vh] w-[50vw]" fill="purple" />
         <Spotlight className="z-10 -top-28 -left-80 h-[80vh] w-[50vw]" fill="blue" />
       </div>
 
@@ -14,6 +14,7 @@ const Hero = () => {
       <div className="h-screen w-full dark:bg-black-100 bg-white  dark:bg-grid-white/[0.3] bg-grid-black/[0.2] relative flex items-center justify-center">
       {/* Radial gradient for the container to give a faded look */}
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black-100 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
+
       <p className="text-4xl sm:text-7xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">
         Backgrounds
       </p>
