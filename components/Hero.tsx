@@ -1,6 +1,10 @@
-import React, { ReactNode } from 'react';
+'use client';
+
+import React, { useState, ReactNode } from 'react';
 import { Spotlight } from './ui/Spotlight'
 import { FloatingNav } from './ui/floating-navbar'
+import CarouselButtons from './CarouselButtons';
+import Image from 'next/image';
 
 interface NavItem {
   name: string;
@@ -11,8 +15,26 @@ interface NavItem {
 interface HeroProps {
   navItems?: NavItem[];
 }
+// The Card and MiniCards components have been moved inside the Hero component
 
 const Hero: React.FC<HeroProps> = ({ navItems = [] }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const itemCount = 3; // Assuming you have 3 items in your carousel
+
+  const handlePrevClick = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + itemCount) % itemCount);
+  };
+
+  const handleNextClick = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % itemCount);
+  };
+
+  const carouselItems = [
+    { id: 1, image: '/path/to/image1.jpg', title: 'Item 1', description: 'Description for Item 1' },
+    { id: 2, image: '/path/to/image2.jpg', title: 'Item 2', description: 'Description for Item 2' },
+    { id: 3, image: '/path/to/image3.jpg', title: 'Item 3', description: 'Description for Item 3' },
+  ];
+
   return (
     <div className="pb-20 pt-36 relative">
       <div className='relative'>
@@ -39,6 +61,47 @@ const Hero: React.FC<HeroProps> = ({ navItems = [] }) => {
         <p className="text-4xl sm:text-7xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">
           Backgrounds
         </p>
+        <div className="flex justify-center space-x-4 mt-8">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md max-w-xs">
+            <h3 className="text-lg font-semibold mb-2">Info Card 1</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Add your information about something here. This could be a feature, statistic, or any other relevant detail.
+            </p>
+          </div>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md max-w-xs">
+            <h3 className="text-lg font-semibold mb-2">Info Card 2</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Add more information about something else here. This could be another feature, benefit, or any other important point.
+            </p>
+          </div>
+        </div>
+        <div className="mt-8 w-full max-w-2xl">
+          <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
+            <h3 className="text-xl font-semibold mb-4">Larger Info Card</h3>
+            <p className="text-base text-gray-600 dark:text-gray-300">
+              This is a slightly larger card with more detailed information. You can use this space to highlight key features, provide a summary of your product or service, or include any other important information that deserves more attention.
+            </p>
+          </div>
+        </div>
+        <div className="relative overflow-hidden mt-8 w-full max-w-4xl mb-8">
+          <div className="flex transition-transform duration-300 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+            {carouselItems.map((item) => (
+              <div key={item.id} className="w-full flex-shrink-0">
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                  <Image src={item.image} alt={item.title} width={400} height={300} className="rounded-lg mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <CarouselButtons 
+            itemCount={itemCount}
+            currentIndex={currentIndex}
+            onPrevClick={handlePrevClick}
+            onNextClick={handleNextClick}
+          />
+        </div>
       </div>
     </div>
   );
