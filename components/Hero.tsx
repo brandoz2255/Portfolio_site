@@ -9,19 +9,19 @@ interface NavItem {
 }
 
 interface HeroProps {
-  navItems: NavItem[];
+  navItems?: NavItem[];
 }
 
-const Hero: React.FC<HeroProps> = ({ navItems }) => {
+const Hero: React.FC<HeroProps> = ({ navItems = [] }) => {
   return (
     <div className="pb-20 pt-36 relative">
       <div className='relative'>
         <FloatingNav 
           className='Nav' 
           navItems={navItems.map(item => ({
-            name: item.name,  // Fixed: changed from navItems.name to item.name
+            name: item.name,
             link: item.link,
-            icon: item.icon  // Added icon to maintain full NavItem structure
+            icon: item.icon as JSX.Element | undefined
           }))} 
         />
         <Spotlight className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen" fill="white" />
